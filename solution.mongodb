@@ -1,118 +1,103 @@
-Microsoft Windows [Version 10.0.22621.1702]
-(c) Microsoft Corporation. All rights reserved.
+/*---Switch Database---*/
 
-C:\Users\mvc>mongosh
-Current Mongosh Log ID: 696f0c86539b828f66628c9f
-Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.6.0
-Using MongoDB:          5.0.9
-Using Mongosh:          2.6.0
+db = db.getSiblingDB("examDB");
 
-For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+/*---Exercise 1: Database & Collection Creation---*/
 
-------
-   The server generated these startup warnings when booting
-   2026-01-19T13:49:58.531+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
-------
+db.students.insertOne({
+    name: "Aryan Kantharia",
+    department: "IT",
+    semester: 5,
+    mobile: "9825611222"
+});
 
-test> use examDB
-switched to db examDB
-examDB> db.students.insert({
-...   name: "Amit Sharma",
-...   department: "Computer Science",
-...   semester: 5
-... })
-...
-... db.students.insert({
-...   name: "Neha Verma",
-...   department: "Information Technology",
-...   semester: 3
-... })
-...
-DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
-{
-  acknowledged: true,
-  insertedIds: { '0': ObjectId('696f0f2b539b828f66628ca1') }
-}
-examDB> db.students.insertOne({
-...   name: "Rahul Mehta",
-...   department: "Electronics",
-...   semester: 4,
-...   mobile: "9876543210"
-... })
-...
-{
-  acknowledged: true,
-  insertedId: ObjectId('696f0f36539b828f66628ca2')
-}
-examDB> db.subjects.insertOne({
-...   course_name: "BSc Computer Science",
-...   subject_list: ["DBMS", "Operating Systems", "Computer Networks", "Java"]
-... })
-...
-{
-  acknowledged: true,
-  insertedId: ObjectId('696f0f42539b828f66628ca3')
-}
-examDB> db.faculty.insertOne({
-...   department: "Computer Science",
-...   teachers: [
-...     { name: "Dr. Rao", experience: 12 },
-...     { name: "Ms. Gupta", experience: 7 },
-...     { name: "Mr. Khan", experience: 5 }
-...   ]
-... })
-...
-{
-  acknowledged: true,
-  insertedId: ObjectId('696f0f49539b828f66628ca4')
-}
-examDB> db.students.insertOne({
-...   _id: ObjectId(),
-...   name: "Sonal Patil",
-...   department: "Mechanical",
-...   semester: 6
-... })
-...
-{
-  acknowledged: true,
-  insertedId: ObjectId('696f0f50539b828f66628ca5')
-}
-examDB> db.students.insertOne({
-...   _id: ObjectId("64abc123456789abcdef0001"),
-...   name: "Karan Singh",
-...   department: "Civil",
-...   semester: 2
-... })
-...
-{
-  acknowledged: true,
-  insertedId: ObjectId('64abc123456789abcdef0001')
-}
-examDB> db.students.insertOne({
-...   _id: ObjectId("64abc123456789abcdef0001"),
-...   name: "Riya Malhotra",
-...   department: "Civil",
-...   semester: 1
-... })
-...
-MongoServerError: E11000 duplicate key error collection: examDB.students index: _id_ dup key: { _id: ObjectId('64abc123456789abcdef0001') }
-examDB> db.subjects.insert({
-...   course_name: "BCA",
-...   subject_list: ["C Programming", "Mathematics"]
-... })
-...
-... db.subjects.insert({
-...   course_name: "BTech IT",
-...   subject_list: ["Python", "AI", "ML"]
-... })
-...
-... db.subjects.insert({
-...   course_name: "MBA",
-...   subject_list: ["Management", "Finance", "Marketing"]
-... })
-...
-{
-  acknowledged: true,
-  insertedIds: { '0': ObjectId('696f0f71539b828f66628ca8') }
-}
-examDB>
+db.students.insertOne({
+    name : "Denis", 
+    department : "EC", 
+    semester : 5, 
+    mobile: "9825611222"
+});
+
+/*---Exercise 2: Insert Document with Multiple Fields---*/
+
+db.students.insertOne({
+    name: "Utasv",
+    department: "IT",
+    semester: 5,
+    mobile: "9825611222"
+});
+
+
+/*---Exercise 3: Array of Simple Values---*/
+
+
+db.subjects.insertOne({
+    course_name : "Information Technology", 
+    subject_list : ["CNS", "EO", "WT", "DMBI"]
+});
+
+
+/*---Exercise 4: Array of Objects---*/
+
+
+db.faculty.insertOne({
+    department: "IT",
+    teachers: [
+        { name: "Tushar Gohil", experience: 13 },
+        { name: "Apurva Mandalaywala", experience: 25 }
+    ]
+});
+
+
+/*---Exercise 5: Explicit Primary Key---*/
+
+
+db.students.insertOne({
+    _id: ObjectId(),
+    name: "Rutvi",
+    department: "IT",
+    semester: 5,
+    mobile: "7016851444"
+});
+
+
+/*---Exercise 6: Duplicate Primary Key Observation---*/
+
+
+db.students.insertOne({
+    _id: ObjectId("695fb634f76965e1281e2617"),
+    name: "Dev",
+    department: "IT",
+    semester: 5,
+    mobile: "7016803095"
+});
+
+db.students.insertOne({
+    _id: ObjectId("695fb634f76965e1281e2617"),
+    name: "RAj",
+    department: "IT",
+    semester: 5,
+    mobile: "7016803096"
+});
+
+/*Error Msg:- MongoServerError: E11000 duplicate key error collection: examDB.students index: _id_ dup key: { _id: ObjectId('695fb634f76965e1281e2617') }*/
+
+
+/*---Exercise 7: Multiple Inserts Using insert()---*/
+
+
+db.students.insertOne({ 
+    name: "Darshan", 
+    enroll: 101 
+});
+
+db.students.insertOne({ 
+    name: "Mahesh", 
+    enroll: 102 
+});
+
+db.students.insertOne({ 
+    name: "kartik", 
+    enroll: 103 
+});
+
